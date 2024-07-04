@@ -1,0 +1,6 @@
+site_name: NATS JetStream
+site_description: Enhanced version of NATS JetStream which preconfigured for testing purpose
+plugins:
+  - techdocs-core
+nav:
+  - Home: 'index.md'
