@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1beta1
+kind: Component
+spec:
+  type: documentation
+  lifecycle: experimental
+  owner: bata.roland@otpmobil.com
+metadata:
+  name: nats-jetstream
+  annotations:
+    backstage.io/techdocs-ref: dir:.
