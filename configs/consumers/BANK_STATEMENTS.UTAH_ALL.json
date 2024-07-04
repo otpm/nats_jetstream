@@ -1,0 +1,15 @@
+{
+    "ack_policy": "explicit",
+    "ack_wait": 1800000000000,
+    "deliver_policy": "all",
+    "deliver_subject": "UTAH_ALL.process",
+    "durable_name": "UTAH_ALL",
+    "name": "UTAH_ALL",
+    "filter_subject": "BANK_STATEMENTS.ALL",
+    "flow_control": true,
+    "idle_heartbeat": 20000000000,
+    "max_ack_pending": 10,
+    "max_deliver": 3,
+    "replay_policy": "instant",
+    "num_replicas": 0
+  }

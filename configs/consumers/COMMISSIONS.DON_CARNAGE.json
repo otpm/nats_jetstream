@@ -1,0 +1,14 @@
+{
+      "ack_policy": "explicit",
+      "ack_wait": 30000000000,
+      "deliver_policy": "all",
+      "deliver_subject": "DON_CARNAGE.calculate",
+      "deliver_group": "DON_CARNAGE.queue",
+      "durable_name": "DON_CARNAGE",
+      "name": "DON_CARNAGE",
+      "filter_subject": "COMMISSIONS.requested",
+      "max_ack_pending": 1000,
+      "max_deliver": -1,
+      "replay_policy": "instant",
+      "num_replicas": 0
+}

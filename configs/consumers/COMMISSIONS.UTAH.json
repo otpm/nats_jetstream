@@ -1,0 +1,14 @@
+{
+    "ack_policy": "explicit",
+    "ack_wait": 600000000000,
+    "deliver_policy": "all",
+    "deliver_subject": "OMAHA.process",
+    "durable_name": "OMAHA",
+    "filter_subject": "BANK_STATEMENTS.WIRE",
+    "flow_control": true,
+    "idle_heartbeat": 20000000000,
+    "max_ack_pending": 10,
+    "max_deliver": 3,
+    "replay_policy": "instant",
+    "num_replicas": 0
+  }

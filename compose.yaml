@@ -1,0 +1,22 @@
+services:
+  nats:
+    build: .
+    container_name: nats-jetstream
+    restart: on-failure
+    stop_signal: SIGUSR2
+    stop_grace_period: 3m
+#    networks: 
+#        - don_carnage
+    ports:
+        - 8222:8222
+        - 4222:4222
+    environment:
+        MONITORING_PORT: 8222
+        COMMUNICATION_PORT: 4222
+        SERVICE_TOKEN: test
+        TZ: Europe/Budapest
+
+#networks:
+#  don_carnage:
+#    external:
+#      true

@@ -1,0 +1,13 @@
+{
+    "ack_policy": "explicit",
+    "ack_wait": 30000000000,
+    "deliver_policy": "all",
+    "deliver_subject": "_INBOX.2PdojvNsEK5voKZiqLgT5x",
+    "durable_name": "UTAH_INSTANT_TRANSFER_ERROR",
+    "name": "UTAH_INSTANT_TRANSFER_ERROR",
+    "filter_subject": "BANK_STATEMENTS.INSTANT_TRANSFER_ERROR",
+    "max_ack_pending": 1000,
+    "max_deliver": -1,
+    "replay_policy": "instant",
+    "num_replicas": 0
+  }
