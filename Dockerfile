@@ -18,6 +18,10 @@ COPY configs/ /etc/nats/configs/
 # Install curl for the script
 RUN apk add curl
 
+# Mark scripts to be executable
+RUN chmod +x /etc/nats/configs/scripts/wait_for_nats.sh
+RUN chmod +x /etc/nats/configs/scripts/init_nats.sh
+
 # Start NATS server and run the initialization script
 RUN ["sh", "-c", "nats-server -c /etc/nats/nats-server.conf -DVV & /etc/nats/configs/scripts/wait_for_nats.sh && /etc/nats/configs/scripts/init_nats.sh && sleep 10 && pkill -SIGUSR2 nats-server && sleep 5"]
 
