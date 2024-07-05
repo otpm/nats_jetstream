@@ -4,7 +4,8 @@ on:
     pull_request: 
         branches: 
             - 'feature/**'
-        types: closed
+        types: 
+            - closed
 
 jobs:
     Release_NATS:
