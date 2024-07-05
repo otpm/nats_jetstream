@@ -11,6 +11,9 @@ jobs:
     Release_NATS:
         runs-on: ubuntu-latest
         if: ${{ github.event.pull_request.merged == true }}
+        env:
+            VERSIONING_PATTERN: v[0-9]*.[0-9]*.[0-9]*
+            NEXT_VERSION:
 
         steps:
             - name: Login to GitHub Container Registry
@@ -20,8 +23,25 @@ jobs:
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
+            - name: GitHub Authenticate
+              uses: fregante/setup-git-user@v2
+
+            - name: Bump Container version
+              uses: otpm/git-next-version@v1
+              with:
+                tag_pattern: ${{ env.VERSIONING_PATTERN }}$
+                increment: patch
+                remove_prefix: true
+
             - name: Build and Push
               uses: docker/build-push-action@v6
               with:
                 push: true
-                tags: otpm/nats_jetstream_otpm:latest
+                tags: | 
+                    otpm/nats_jetstream_otpm:latest
+                    otpm/nats_jetstream_otpm:${{ env.NEXT_VERSION }}
+
+            - name: Push tags
+              run: |
+                git tag -a "v${{ env.NEXT_VERSION }}" -m "NATS JetStream Release version: ${{ env.NEXT_VERSION }}"
+                git push origin tag v${{ env.NEXT_VERSION }}
