@@ -3,7 +3,7 @@ name: Release NATS
 on:
     pull_request: 
         branches: 
-            - 'feature/**'
+            - main
         types: 
             - closed
 
