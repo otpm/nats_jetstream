@@ -12,6 +12,8 @@ jobs:
         runs-on: ubuntu-latest
         if: ${{ github.event.pull_request.merged == true }}
         env:
+            REGISTRY: ghcr.io
+            IMAGE_NAME: ${{ github.repository }}
             VERSIONING_PATTERN: v[0-9]*.[0-9]*.[0-9]*
             NEXT_VERSION:
 
@@ -25,7 +27,7 @@ jobs:
             - name: Login to GitHub Container Registry
               uses: docker/login-action@v3
               with:
-                registry: ghcr.io
+                registry: ${{ env.REGISTRY }}
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
@@ -36,16 +38,27 @@ jobs:
                 increment: patch
                 remove_prefix: true
 
-            - name: Set up Docker Buildx
-              uses: docker/setup-buildx-action@v3
+            - name: Extract metadata (tags, labels) for Docker
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
             - name: Build and Push
               uses: docker/build-push-action@v6
+              id: push
               with:
+                context: .
                 push: true
-                tags: | 
-                    otpm/nats_jetstream_otpm:latest
-                    otpm/nats_jetstream_otpm:${{ env.NEXT_VERSION }}
+                tags: ${{ steps.meta.outputs.tags }}
+                labels: ${{ steps.meta.outputs.labels }}
+
+            - name: Generate artifact attestation
+              uses: actions/attest-build-provenance@v1
+              with:
+                subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+                subject-digest: ${{ steps.push.outputs.digest }}
+                push-to-registry: true
 
             - name: Push tags
               run: |
