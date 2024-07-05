@@ -10,6 +10,7 @@ ARG SERVICE_TOKEN
 
 # Install NATS CLI
 COPY tools/nats /usr/local/bin/nats
+RUN chmod +x /usr/local/bin/nats
 
 # Copy configuration files
 COPY nats-server.conf /etc/nats/nats-server.conf
