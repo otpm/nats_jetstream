@@ -56,7 +56,8 @@ jobs:
                 tags: | 
                     ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
                     ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_VERSION }}
-                labels:
+                labels: |
+                  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_VERSION }}
                  
             - name: Build Changelog
               id: build_changelog
