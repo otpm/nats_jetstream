@@ -24,7 +24,7 @@ RUN chmod +x /etc/nats/configs/scripts/wait_for_nats.sh
 RUN chmod +x /etc/nats/configs/scripts/init_nats.sh
 
 # Start NATS server and run the initialization script
-RUN ["sh", "-c", "nats-server -c /etc/nats/nats-server.conf -DVV & /etc/nats/configs/scripts/wait_for_nats.sh && /etc/nats/configs/scripts/init_nats.sh && sleep 10 && pkill -SIGUSR2 nats-server && sleep 5"]
+RUN ["sh", "-c", "nats-server -c /etc/nats/nats-server.conf -DVV & /etc/nats/configs/scripts/wait_for_nats.sh && /etc/nats/configs/scripts/init_nats.sh && pkill -SIGUSR2 nats-server"]
 
 # Stage 2: Final Image
 FROM nats:2.10.12-alpine
