@@ -56,13 +56,6 @@ jobs:
                     ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
                     ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_VERSION }}
 
-            - name: Generate artifact attestation
-              uses: actions/attest-build-provenance@v1
-              with:
-                subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-                subject-digest: ${{ steps.push.outputs.digest }}
-                push-to-registry: true
-
             - name: Push tags
               run: |
                 git tag -a "v${{ env.NEXT_VERSION }}" -m "NATS JetStream Release version: ${{ env.NEXT_VERSION }}"
