@@ -3,24 +3,79 @@ name: Release NATS
 on:
     pull_request: 
         branches: 
-            - feature/*
-        types: closed
+            - main
+        types: 
+            - closed
 
 jobs:
     Release_NATS:
+        # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+        permissions:
+            contents: write
+            pages: write
+            id-token: write
+            packages: write
+            attestations: write
+
         runs-on: ubuntu-latest
         if: ${{ github.event.pull_request.merged == true }}
+        env:
+            REGISTRY: ghcr.io
+            IMAGE_NAME: ${{ github.repository }}
+            VERSIONING_PATTERN: v[0-9]*.[0-9]*.[0-9]*
+            NEXT_VERSION:
+            LAST_VERSION:
 
         steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: GitHub Authenticate
+              uses: fregante/setup-git-user@v2
+
             - name: Login to GitHub Container Registry
               uses: docker/login-action@v3
               with:
-                registry: ghcr.io
+                registry: ${{ env.REGISTRY }}
                 username: ${{ github.actor }}
                 password: ${{ secrets.GITHUB_TOKEN }}
 
+            - name: Bump Container version
+              uses: otpm/git-next-version@v1
+              with:
+                tag_pattern: ${{ env.VERSIONING_PATTERN }}$
+                increment: patch
+                remove_prefix: true
+
             - name: Build and Push
               uses: docker/build-push-action@v6
+              id: push
               with:
+                context: .
                 push: true
-                tags: otpm/nats_jetstream_otpm:latest
+                tags: | 
+                  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+                  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_VERSION }}
+                labels: |
+                  application.releaseBranch=${{ github.ref_name }}
+                  application.name=${{ env.IMAGE_NAME }}
+                  application.version=${{ env.NEXT_VERSION }}
+                 
+            - name: Build Changelog
+              id: build_changelog
+              uses: mikepenz/release-changelog-builder-action@v4
+              with:
+                fromTag: ${{ env.LAST_VERSION }}
+                toTag: ${{ github.ref }}
+
+            - name: Push tags
+              run: |
+                git tag -a "v${{ env.NEXT_VERSION }}" -m "NATS JetStream Release version: ${{ env.NEXT_VERSION }}"
+                git push origin tag v${{ env.NEXT_VERSION }}
+
+            - name: Release
+              uses: softprops/action-gh-release@v2
+              with:
+                body: ${{ steps.build_changelog.outputs.changelog }}
+                make_latest: true
+                tag_name: v${{ env.NEXT_VERSION }}

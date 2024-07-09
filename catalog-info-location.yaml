@@ -1,0 +1,9 @@
+apiVersion: backstage.io/v1beta1
+kind: Location
+metadata:
+  name: nats-jetstream-location
+  namespace: default
+spec:
+  type: url
+  targets:
+    - "./catalog-info-techdocs.yaml"
