@@ -57,7 +57,9 @@ jobs:
                   ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
                   ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_VERSION }}
                 labels: |
-                  ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.NEXT_VERSION }}
+                  application.releaseBranch=${{ github.ref_name }}
+                  application.name=${{ env.IMAGE_NAME }}
+                  application.version=${{ env.NEXT_VERSION }}
                  
             - name: Build Changelog
               id: build_changelog
