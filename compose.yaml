@@ -6,10 +6,10 @@ services:
     stop_signal: SIGUSR2
     stop_grace_period: 3m
     ports:
-        - 8222:8222
-        - 4222:4222
+      - "${MONITORING_PORT}:${MONITORING_PORT}"
+      - "${COMMUNICATION_PORT}:${COMMUNICATION_PORT}"
     environment:
-        MONITORING_PORT: 8222
-        COMMUNICATION_PORT: 4222
-        SERVICE_TOKEN: test
+        COMMUNICATION_PORT: ${COMMUNICATION_PORT}
+        MONITORING_PORT: ${MONITORING_PORT}
+        SERVICE_TOKEN: ${SERVICE_TOKEN}
         TZ: Europe/Budapest

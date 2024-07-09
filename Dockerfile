@@ -1,12 +1,8 @@
-ARG MONITORING_PORT=8222
-ARG COMMUNICATION_PORT=5222
-ARG SERVICE_TOKEN=TEST
-
 # Stage 1: Configuration
 FROM nats:2.10.12-alpine AS configurator
-ARG MONITORING_PORT
-ARG COMMUNICATION_PORT
-ARG SERVICE_TOKEN
+ARG MONITORING_PORT=8222
+ARG COMMUNICATION_PORT=4222
+ARG SERVICE_TOKEN=ILOVEOTPM
 
 # Install NATS CLI
 COPY tools/nats /usr/local/bin/nats
@@ -28,9 +24,6 @@ RUN ["sh", "-c", "nats-server -c /etc/nats/nats-server.conf -DVV & /etc/nats/con
 
 # Stage 2: Final Image
 FROM nats:2.10.12-alpine
-ARG MONITORING_PORT
-ARG COMMUNICATION_PORT
-ARG SERVICE_TOKEN
 
 # Copy data and configuration file from the configurator stage
 COPY --from=configurator /data /data
