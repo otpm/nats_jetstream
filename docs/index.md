@@ -18,6 +18,7 @@ The pre-configured service includes the following settings for `STREAM` and `CON
 ```
 
 The service differs from the live NATS service in the following ways:
+
 * Does not contain settings related to the `TLS` service
 * Does not contain settings related to the `DNS` settings
 * No persistence of data is possible, which means that data is lost when the container is restarted or recreated
@@ -34,12 +35,14 @@ The service differs from the live NATS service in the following ways:
         └── compose.yaml
     ```
 2. Set the following parameters in the `.env` file
-    | Variable | Value | Required |
-    | :-- | :-- | :--: |
-    | `MONITORING_PORT` | `8222` or a `specific` monitoring port | `true` |
-    | `COMMUNICATION_PORT` | `4222` or a `specific` communication port | `true` |
-    | `SERVICE_TOKEN` | `ILOVEOTPM` or a `specific` token for **authentication**  | `true` |
-    | `TZ` | `Europe/Budapest` or a `specific` timezone configuration | `false` |
+   
+    | Variable             | Value                                                    | Required |
+    | :------------------- | :------------------------------------------------------- | :------: |
+    | `MONITORING_PORT`    | `8222` or a `specific` monitoring port                   |  `true`  |
+    | `COMMUNICATION_PORT` | `4222` or a `specific` communication port                |  `true`  |
+    | `SERVICE_TOKEN`      | `ILOVEOTPM` or a `specific` token for **authentication** |  `true`  |
+    | `TZ`                 | `Europe/Budapest` or a `specific` timezone configuration | `false`  |
+
     ```properties
     MONITORING_PORT=8222
     COMMUNICATION_PORT=4222
@@ -47,9 +50,10 @@ The service differs from the live NATS service in the following ways:
     TZ=Europe/Budapest
     ```
 3. Set the following parameters in the `compose.yaml` file
-    | Variable | Value | Required |
-    | :-- | :-- | :--: |
-    | `<VERSION>` | Can be `latest` or a `specific` version | `true` |
+   
+    | Variable    | Value                                   | Required |
+    | :---------- | :-------------------------------------- | :------: |
+    | `<VERSION>` | Can be `latest` or a `specific` version |  `true`  |
     
     **For environment variables in the `.env` file specified (in the previous step) that are not mandatory, they do not need to be specified in the environment section of the `compose.yaml` file.**
     ```yaml
@@ -72,11 +76,13 @@ The service differs from the live NATS service in the following ways:
 ## Application Configuration
 
 Application configuration can be done in a number of ways
+
 1. Database side configuration
 2. Application Framework side configuration (i.e. `Spring Framework`)
 3. ...
 
 There are many ways to configure the application, so please configure the communication on the application as described in the documentation.
+
 1. [DonCarnage Docs](https://github.com/otpm/overlord-doncarnage?tab=readme-ov-file#nats-jetstream-konfigur%C3%A1l%C3%A1sa)
 2. [Microbi Docs](https://gitlab.intra.otpmobil.com/tools/mikrobi#queue-konfigur%C3%A1l%C3%A1sa) - Not described in documentation, but must be set in database
 3. Omaha Docs - Not described in documentation, but must be set in database
