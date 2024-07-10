@@ -58,19 +58,19 @@ The service differs from the live NATS service in the following ways:
     **For environment variables in the `.env` file specified (in the previous step) that are not mandatory, they do not need to be specified in the environment section of the `compose.yaml` file.**
     ```yaml
     services:
-    nats:
+      nats:
         image: ghcr.io/otpm/nats_jetstream:<VERSION>
         restart: on-failure
         stop_signal: SIGUSR2
         stop_grace_period: 3m
         ports:
-        - "${MONITORING_PORT}:${MONITORING_PORT}"
-        - "${COMMUNICATION_PORT}:${COMMUNICATION_PORT}"
+          - "${MONITORING_PORT}:${MONITORING_PORT}"
+          - "${COMMUNICATION_PORT}:${COMMUNICATION_PORT}"
         environment:
-            COMMUNICATION_PORT: ${COMMUNICATION_PORT}
-            MONITORING_PORT: ${MONITORING_PORT}
-            SERVICE_TOKEN: ${SERVICE_TOKEN}
-            TZ: ${TZ}
+          COMMUNICATION_PORT: ${COMMUNICATION_PORT}
+          MONITORING_PORT: ${MONITORING_PORT}
+          SERVICE_TOKEN: ${SERVICE_TOKEN}
+          TZ: ${TZ}
     ```
 
 ## Application Configuration
